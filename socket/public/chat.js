@@ -1,13 +1,14 @@
 window.onload = function() {
  
     var messages = [];
-    var socket = io.connect('http://192.168.1.13:3700');
+    var socket = io.connect('http://localhost:5000');
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
     var name = document.getElementById("name");
  
     socket.on('message', function (data) {
+        console.log(data);
         if(data.message) {
             messages.push(data);
             var html = '';
