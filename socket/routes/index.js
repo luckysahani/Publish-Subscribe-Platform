@@ -63,8 +63,17 @@ module.exports = function(passport,io){
 	});
 
 	router.get('/movies', isAuthenticated, function(req, res){
-		var user = req.user;
-		res.render('movies', {user: req.user})
+		var data = {};
+		data.user = req.user; 
+		Movie.find({genre:{$in:data.user.genres}}, function(err, movies){
+			if(err){
+
+			}
+			else{
+				data.movies = movies;
+				res.render('movies', {data: data})		
+			}
+		})
 	});
 
 	router.get('/addmovie', isAuthenticated, function(req, res){
@@ -86,7 +95,7 @@ module.exports = function(passport,io){
 			}
 			else{
 				data.genre = movie.genre;
-				data.message = movie.name + " has been added in " + movie.genre+".";
+				data.message = movie.name;
 				res.render('addmovie', {data: data});
 			}
 		})
@@ -94,6 +103,7 @@ module.exports = function(passport,io){
 
 	router.get('/movies/subscribe', isAuthenticated, function(req, res){
 
+		var data = {};
 		var user = req.user;
 		user.category = req.query.genre;
 
@@ -103,7 +113,16 @@ module.exports = function(passport,io){
 			}
 			else{
 				if(userUpdated.genres.indexOf(user.category) > -1){
-					res.render('movies', {user:userUpdated})
+					Movie.find({genre:{$in:userUpdated.genres}}, function(err, movies){
+						if(err){
+
+						}
+						else{
+							data.movies = movies;
+							data.user = user;
+							res.render('movies', {data: data})		
+						}
+					})
 				}
 				else{
 					userUpdated.genres.push(user.category);
@@ -112,7 +131,16 @@ module.exports = function(passport,io){
 
 						}
 						else{
-							res.render('movies', {user:userUpdated})
+							Movie.find({genre:{$in:userUpdated.genres}}, function(err, movies){
+								if(err){
+
+								}
+								else{
+									data.movies = movies;
+									data.user = userUpdated;
+									res.render('movies', {data: data})		
+								}
+							})
 						}
 					})
 				}
@@ -121,8 +149,9 @@ module.exports = function(passport,io){
 	});
 
 	router.get('/movies/unsubscribe', isAuthenticated, function(req, res){
-
+		var data = {};
 		var user = req.user;
+		data.user = user;
 		user.category = req.query.genre;
 
 		User.findOne({ 'username' :  user.username }, function(err, userUpdated) {
@@ -138,12 +167,30 @@ module.exports = function(passport,io){
 							//
 						}
 						else{
-							res.render('movies', {user:userUpdated})
+							Movie.find({genre:{$in:userUpdated.genres}}, function(err, movies){
+								if(err){
+
+								}
+								else{
+									data.movies = movies;
+									data.user = userUpdated;
+									res.render('movies', {data: data})		
+								}
+							})
 						}
 					})
 				}
 				else{
-					res.render('movies', {user:userUpdated})
+					Movie.find({genre:{$in:user.genres}}, function(err, movies){
+						if(err){
+
+						}
+						else{
+							data.movies = movies;
+							data.user = user;
+							res.render('movies', {data: data})		
+						}
+					})
 				}
 			}
 		});

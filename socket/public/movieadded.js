@@ -5,13 +5,37 @@ window.onload = function() {
  
     socket.on('movieaddedemit', function (data) {
         console.log(data);
-        notifyMe(data.user.username, data.message);
+        notifyMe(data.user.username, data.message+ " has been added in " + data.genre+".");
+        addElement(data.message.substring(0,1), data.message);
     });
 
-    for (var i = 0; i < user.genres.length; i++) {
-    	socket.emit('joinroom', user.genres[i]);
-    	console.log("Joined room " + user.genres[i]);
+    for (var i = 0; i < data.user.genres.length; i++) {
+    	socket.emit('joinroom', data.user.genres[i]);
+    	console.log("Joined room " + data.user.genres[i]);
     };
+
+    for(var i=0;i<data.movies.length;i++){
+    	addElement(data.movies[i].name.substring(0,1), data.movies[i].name)
+    }
+
+    function addElement(initial, message){
+    	var rightBox = document.getElementById("rightBox");
+    	var newsFeedDiv = document.createElement('div');
+    	newsFeedDiv.id = "newsFeedElem";
+    	var circleDiv = document.createElement('div');
+    	circleDiv.id = "circle";
+    	var circleP = document.createElement('p');
+    	circleDiv.appendChild(circleP);
+    	var messageP = document.createElement('p');
+    	messageP.id = "movieTitle";
+
+    	circleP.innerHTML = initial;
+    	messageP.innerHTML = message;
+
+    	newsFeedDiv.appendChild(circleDiv);
+    	newsFeedDiv.appendChild(messageP);
+    	rightBox.insertBefore(newsFeedDiv, rightBox.firstChild);
+    }
 
     function notifyMe(user,message) {
 	  // Let's check if the browser supports notifications
