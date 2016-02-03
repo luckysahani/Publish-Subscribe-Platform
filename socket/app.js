@@ -42,8 +42,22 @@ app.use(flash());
 var initPassport = require('./passport/init');
 initPassport(passport);
 
-var routes = require('./routes/index')(passport);
+io.sockets.on('connection', function (socket) {
+    console.log('user connected');
+    socket.emit('message', { message: 'welcome to the chat' });
+    socket.on('movieadded', function (data) {
+        console.log(data);
+        io.sockets.to(data.data.genre).emit('movieaddedemit', data.data);
+    });
+    socket.on('joinroom', function(data){
+        console.log(data);
+        socket.join(data);
+    });
+});
+
+var routes = require('./routes/index')(passport,io);
 app.use('/', routes);
+// routes(app,io);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -64,12 +78,7 @@ if (app.get('env') === 'development') {
     });
 }
 
-io.sockets.on('connection', function (socket) {
-    socket.emit('message', { message: 'welcome to the chat' });
-    socket.on('send', function (data) {
-        io.sockets.emit('message', data);
-    });
-});
+
 module.exports = app;
 
 console.log("Listening on port " + 5000);

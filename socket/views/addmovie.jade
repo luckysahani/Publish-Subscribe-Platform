@@ -1,0 +1,46 @@
+doctype html
+html
+	head
+	title= title
+	link(rel='stylesheet', href='/stylesheets/style.css')
+	link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+	script(src='/socket.io.js')
+	script(type="text/javascript").
+		var data = !{JSON.stringify(data)}
+	script(src='/addmovie.js')
+	body
+		block content
+			div.container
+				div.row
+					div.col-sm-6.col-md-4.col-md-offset-4
+						h1.text-center.login-title Add a new movie
+							div.account-wall
+								img(class='profile-img', src='http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/Film-icon.png')
+								form(class='form-signin', action='/addmovie', method='POST')
+									input(type='text', name='movie' class='form-control', placeholder='Movie Title',required, autofocus)
+									select(class='genreSelect' name='genre')
+										option action
+										option adventure
+										option animation
+										option biography
+										option comedy
+										option crime
+										option documentary
+										option drama
+										option family 
+										option fantasy
+										option filmnoir
+										option history
+										option horror
+										option music
+										option musical
+										option mystery
+										option romance
+										option scifi
+										option sport
+										option thriller
+										option war
+										option western
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Add Movie
+						p
+							|#{message}
