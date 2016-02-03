@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../models/user');
+var Genre = require('../models/genres');
+var Movie = require('../models/movies');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -11,7 +14,7 @@ var isAuthenticated = function (req, res, next) {
 	res.redirect('/');
 }
 
-module.exports = function(passport){
+module.exports = function(passport,io){
 
 	/* GET login page. */
 	router.get('/', function(req, res) {
@@ -21,7 +24,7 @@ module.exports = function(passport){
 
 	/* Handle Login POST */
 	router.post('/login', passport.authenticate('login', {
-		successRedirect: '/page',
+		successRedirect: '/movies',
 		failureRedirect: '/',
 		failureFlash : true  
 	}));
@@ -33,7 +36,7 @@ module.exports = function(passport){
 
 	/* Handle Registration POST */
 	router.post('/signup', passport.authenticate('signup', {
-		successRedirect: '/page',
+		successRedirect: '/movies',
 		failureRedirect: '/signup',
 		failureFlash : true  
 	}));
@@ -45,7 +48,7 @@ module.exports = function(passport){
 
 	/* GET Home Page */
 	router.get('/page', isAuthenticated, function(req, res){
-		res.render("page");
+		res.render("page", {user:req.user});
 	});
 
 	/* Handle Logout */
@@ -57,6 +60,95 @@ module.exports = function(passport){
 	/* Handle Logout */
 	router.get('/test', function(req, res) {
 		res.render('test');
+	});
+
+	router.get('/movies', isAuthenticated, function(req, res){
+		var user = req.user;
+		io.sockets.on('connection', function(socket){
+			console.log('asadadd');
+			for (var i = 0; i < user.genres; i++) {
+				socket.join(user.genres[i]);
+			};
+		})
+		res.render('movies', {user: req.user})
+	});
+
+	router.get('/addmovie', isAuthenticated, function(req, res){
+		res.render('addmovie')
+	});
+
+	router.post('/addmovie', isAuthenticated, function(req,res){
+		var movie = new Movie();
+		movie.name = req.body.movie;
+		movie.genre = req.body.genre;
+		movie.save(function(err){
+			if(err){
+				//do some
+			}
+			else{
+				io.sockets.on('connection', function(socket){
+					socket.emit('movieadded', movie.name + " has been added in " + movie.genre, movie.genre);
+				})
+				res.render('addmovie', {message: movie.name + " added successfully."});
+			}
+		})
+	})
+
+	router.get('/movies/subscribe', isAuthenticated, function(req, res){
+
+		var user = req.user;
+		user.category = req.query.genre;
+
+		User.findOne({ 'username' :  user.username }, function(err, userUpdated) {
+			if(err){
+				//handle error
+			}
+			else{
+				if(userUpdated.genres.indexOf(user.category) > -1){
+					res.render('movies', {user:userUpdated})
+				}
+				else{
+					userUpdated.genres.push(user.category);
+					userUpdated.save(function(err){
+						if(err){
+
+						}
+						else{
+							res.render('movies', {user:userUpdated})
+						}
+					})
+				}
+			}
+		});
+	});
+
+	router.get('/movies/unsubscribe', isAuthenticated, function(req, res){
+
+		var user = req.user;
+		user.category = req.query.genre;
+
+		User.findOne({ 'username' :  user.username }, function(err, userUpdated) {
+			if(err){
+				//handle error
+			}
+			else{
+				var index = userUpdated.genres.indexOf(user.category);
+				if(index > -1){
+					userUpdated.genres.splice(index, 1);
+					userUpdated.save(function(err){
+						if(err){
+							//
+						}
+						else{
+							res.render('movies', {user:userUpdated})
+						}
+					})
+				}
+				else{
+					res.render('movies', {user:userUpdated})
+				}
+			}
+		});
 	});
 
 	return router;

@@ -1,0 +1,40 @@
+body{
+	margin:40px;
+}
+
+*{
+	font-family: Raleway;
+	color: grey;
+}
+
+h3{
+	margin: 0;
+}
+
+h1,h2{
+	text-align: center;
+}
+
+#box{
+	background: #f5f5f5;
+	padding:40px;
+	text-align: center;
+}
+
+#container{
+	display: inline-block;
+	margin:10px;
+	width: 200px;
+	background: white;
+	padding: 24px;
+	box-shadow: 0 2px 2px 2px #f9f9f9;
+}
+
+a{
+	background: #8CB8E6;
+	border: #eee;
+	padding: 6px;
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}

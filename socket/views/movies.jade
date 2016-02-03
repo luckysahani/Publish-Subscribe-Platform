@@ -1,0 +1,219 @@
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    link(href='/stylesheets/main.css', rel='stylesheet')
+    link(href='http://fonts.googleapis.com/css?family=Raleway', rel='stylesheet')
+    script(src='/socket.io.js')
+    script(src='/movieadded.js')
+    script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
+    script(type='text/javascript').
+      var subscribeToGenre = function(category){
+        console.log(category);
+      }
+
+  body
+    h1 Movies By Genres
+    h2 #{user.firstname} #{user.lastname}
+    <br>
+    div#box
+      div#container
+        h3
+          |Action
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('action') > -1)
+          a(href='/movies/unsubscribe?genre=action') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=action') Subscribe  
+        
+      div#container
+        h3
+          |Adventure
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('adventure') > -1)
+          a(href='/movies/unsubscribe?genre=adventure') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=adventure') Subscribe  
+
+      div#container
+        h3
+          |Animation
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('animation') > -1)
+          a(href='/movies/unsubscribe?genre=animation') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=animation') Subscribe  
+      div#container
+        h3
+          |Biography
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('biography') > -1)
+          a(href='/movies/unsubscribe?genre=biography') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=biography') Subscribe  
+      div#container
+        h3
+          |Comedy
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('comedy') > -1)
+          a(href='/movies/unsubscribe?genre=comedy') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=comedy') Subscribe  
+      div#container
+        h3
+          |Crime
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('crime') > -1)
+          a(href='/movies/unsubscribe?genre=crime') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=crime') Subscribe  
+      div#container
+        h3
+          |Documentary
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('documentary') > -1)
+          a(href='/movies/unsubscribe?genre=documentary') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=documentary') Subscribe  
+      div#container
+        h3
+          |Drama
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('drama') > -1)
+          a(href='/movies/unsubscribe?genre=drama') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=drama') Subscribe  
+      div#container
+        h3
+          |Family
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('family') > -1)
+          a(href='/movies/unsubscribe?genre=family') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=family') Subscribe  
+      div#container
+        h3
+          |Fantasy
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('fantasy') > -1)
+          a(href='/movies/unsubscribe?genre=fantasy') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=fantasy') Subscribe  
+      div#container
+        h3
+          |Film Noir
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('filmnoir') > -1)
+          a(href='/movies/unsubscribe?genre=filmnoir') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=filmnoir') Subscribe  
+      div#container
+        h3
+          |History
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('history') > -1)
+          a(href='/movies/unsubscribe?genre=history') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=history') Subscribe  
+      div#container
+        h3
+          |Horror
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('horror') > -1)
+          a(href='/movies/unsubscribe?genre=horror') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=horror') Subscribe  
+      div#container
+        h3
+          |Music
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('music') > -1)
+          a(href='/movies/unsubscribe?genre=music') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=music') Subscribe  
+      div#container
+        h3
+          |Musical
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('musical') > -1)
+          a(href='/movies/unsubscribe?genre=musical') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=musical') Subscribe  
+      div#container
+        h3
+          |Mystery
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('mystery') > -1)
+          a(href='/movies/unsubscribe?genre=mystery') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=mystery') Subscribe  
+      div#container
+        h3
+          |Romance
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('romance') > -1)
+          a(href='/movies/unsubscribe?genre=romance') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=romance') Subscribe  
+      div#container
+        h3
+          |Sci-Fi
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('scifi') > -1)
+          a(href='/movies/unsubscribe?genre=scifi') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=scifi') Subscribe  
+      div#container
+        h3
+          |Sport
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('sport') > -1)
+          a(href='/movies/unsubscribe?genre=sport') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=sport') Subscribe  
+      div#container
+        h3
+          |Thriller
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('thriller') > -1)
+          a(href='/movies/unsubscribe?genre=thriller') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=thriller') Subscribe  
+      div#container
+        h3
+          |War 
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('war') > -1)
+          a(href='/movies/unsubscribe?genre=war') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=war') Subscribe  
+      div#container
+        h3
+          |Western
+        p
+          |The Fellowship of the ring
+        if(user.genres.indexOf('western') > -1)
+          a(href='/movies/unsubscribe?genre=western') Unsubscribe
+        else
+          a(href='/movies/subscribe?genre=western') Subscribe  
